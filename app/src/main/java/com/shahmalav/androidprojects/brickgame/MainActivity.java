@@ -15,11 +15,11 @@ import android.view.SurfaceView;
 
 public class MainActivity extends Activity {
 
-
     GameBoardView gameBoardView;
     Paddle paddle;
     Ball ball;
-    Brick brick;
+    Brick[] brick = new Brick[200];
+    int bricks = 0;
     int sx;
     int sy;
 
@@ -55,6 +55,8 @@ public class MainActivity extends Activity {
             sx = point.x;
             sy = point.y;
             paddle = new Paddle(sx, sy);
+            ball = new Ball(sx, sy);
+            restartGame();
         }
 
         @Override
@@ -77,6 +79,7 @@ public class MainActivity extends Activity {
 
         public void update(){
             paddle.update(fps);
+         //   ball.update(fps);
         }
 
         public void draw(){
@@ -88,6 +91,18 @@ public class MainActivity extends Activity {
 
                 //draw paddle, ball, bricks, HUD
                 canvas.drawRect(paddle.getPaddle(),paint);
+
+
+                paint.setColor(Color.argb(255,249,129, 0));
+                for (int i =0; i< bricks; i++){
+                    if(brick[i].isVisible()){
+                        canvas.drawRect(brick[i].getBrick(),paint);
+                    }
+                }
+
+                paint.setColor(Color.WHITE);
+                canvas.drawRect(ball.getBall(),paint);
+
                 surfaceHolder.unlockCanvasAndPost(canvas);
             }
         }
@@ -108,6 +123,19 @@ public class MainActivity extends Activity {
             thread.start();
         }
 
+        public void restartGame(){
+            int brickWidth = sx/8;
+            int brickHeight = sy/10;
+            bricks = 0;
+          //  ball.resetBall(sx,sy);
+            for(int col = 0; col<8; col++){
+                for (int row = 0; row<10; row++){
+                    brick[bricks] = new Brick(row, col, brickWidth, brickHeight);
+                    bricks++;
+                }
+            }
+
+        }
 
         @Override
         public boolean onTouchEvent(MotionEvent event) {

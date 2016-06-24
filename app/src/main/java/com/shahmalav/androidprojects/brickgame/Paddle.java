@@ -17,7 +17,7 @@ public class Paddle {
 
     public Paddle(int sx, int sy){
         x=sx/2;
-        y=sy - 10;
+        y=sy - 40;
         height = 20;
         width = 120;
         speed = 200;

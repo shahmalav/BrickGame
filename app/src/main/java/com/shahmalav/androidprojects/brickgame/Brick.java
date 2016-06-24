@@ -17,8 +17,8 @@ public class Brick {
     private int bottom;
 
     public Brick(int r, int c, int sx, int sy){
-        width = sx/8;
-        height = sy/10;
+        width = sx;
+        height = sy/2;
 
         left = c*width+ PADDING;
         top = r*height+ PADDING;
