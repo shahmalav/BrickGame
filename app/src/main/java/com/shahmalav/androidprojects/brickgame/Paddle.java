@@ -29,7 +29,7 @@ public class Paddle {
     }
 
 
-    public void update(){
+    public void update(long fps){
         //TODO : update paddle x,y
     }
 
