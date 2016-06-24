@@ -64,12 +64,10 @@ public class MainActivity extends Activity {
             while (isPlaying){
                 long startTime = System.currentTimeMillis();
 
-                if(isPaused){
+                if(!isPaused){
                     update();
                 }
-
                 draw();
-
                 ttf = System.currentTimeMillis() - startTime;
                 if(ttf >= 1){
                     fps = 1000/ttf;
@@ -79,7 +77,7 @@ public class MainActivity extends Activity {
 
         public void update(){
             paddle.update(fps);
-         //   ball.update(fps);
+            ball.update(fps);
         }
 
         public void draw(){
@@ -101,12 +99,11 @@ public class MainActivity extends Activity {
                 }
 
                 paint.setColor(Color.WHITE);
-                canvas.drawRect(ball.getBall(),paint);
+                canvas.drawCircle(ball.getCx(),ball.getCy(),ball.getR(),paint);
 
                 surfaceHolder.unlockCanvasAndPost(canvas);
             }
         }
-
 
         public void pause(){
             isPlaying = false;
@@ -142,10 +139,16 @@ public class MainActivity extends Activity {
 
             switch (event.getAction() & MotionEvent.ACTION_MASK){
 
-                case MotionEvent.ACTION_DOWN:
+                case MotionEvent.ACTION_DOWN: isPaused = false;
+                                                if(event.getX() > sx/2){
+                                                    paddle.setDirection('R');
+                                                }else {
+                                                    paddle.setDirection('L');
+                                                }
                                                 break;
 
                 case MotionEvent.ACTION_UP:
+                                                paddle.setDirection('C');
                                                 break;
             }
             return true;

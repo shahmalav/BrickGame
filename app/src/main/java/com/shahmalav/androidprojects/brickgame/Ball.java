@@ -8,67 +8,35 @@ import java.util.Random;
  * Created by shahm on 6/23/2016.
  */
 public class Ball {
-    RectF ball;
-    float velocityX;
-    float velocityY;
-    float x;
-    float y;
-    float width = 10;
-    float height = 10;
+    private float cx;
+    private float cy;
+    private float r;
 
     public Ball(int sx, int sy){
-        x=sx / 2;
-        y=sy - 60;
-        velocityX = 200;
-        velocityY = -400;
-        ball = new RectF(x, y, x+width, y+height);
-        //ball = new RectF(x, y, x+width, y-height);
+        cx=sx / 2;
+        cy=sy - 60;
+        r=10;
     }
 
-    public RectF getBall(){
-        return ball;
+    public float getCx(){
+        return cx;
     }
 
-    public void reverseVelocityY(){
-        velocityY = -velocityY;
+    public float getCy(){
+        return cy;
     }
 
-    public void reverseVelocityX(){
-        velocityX = -velocityX;
+    public float getR(){
+        return r;
     }
 
-    public void setRandomVelocity(){
-        Random gen = new Random();
-        int r = gen.nextInt(2);
-
-        if(r == 0){
-            reverseVelocityX();
-        }
-    }
-
-    public void clearObstacleY(float y){
-        ball.bottom = y;
-        ball.top = y-height;
-    }
-
-    public void clearObstacleX(float x){
-        ball.left = x;
-        ball.right = x+width;
-    }
-
-    public void resetBall(int x, int y){
-        ball.left = x/2;
-        ball.top = y-100;
-        ball.right = this.x+width;
-        ball.bottom = this.y+height;
-
+    public void resetBall(int sx, int sy){
+        cx = sx;
+        cy = sy;
+        r=10;
     }
 
     public void update(long fps){
-        ball.left = ball.left +(velocityX/fps);
-        ball.top = ball.top + (velocityY/fps);
-        ball.right = ball.left + width;
-        ball.bottom = ball.top - height;
 
     }
 }
