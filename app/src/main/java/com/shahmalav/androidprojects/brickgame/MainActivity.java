@@ -99,6 +99,10 @@ public class MainActivity extends Activity {
                 ball.reverseVX();
             }
 
+            if(ball.getCy()+ball.getR() > sy){
+                ball.reverseVY();
+            }
+
             ball.update(fps);
         }
 
