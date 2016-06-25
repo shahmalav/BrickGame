@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.RectF;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Display;
@@ -77,7 +78,41 @@ public class MainActivity extends Activity {
 
         public void update(){
             paddle.update(fps);
+            for (int i=0; i<bricks; i++){
+                if(brick[i].isVisible()){
+                    if(isCollision(brick[i].getBrick())){
+                        brick[i].destroy();
+                        ball.reverseVY();
+                    }
+                }
+            }
+
+            if(isCollision(paddle.getPaddle())){
+                ball.setRandomVX();
+                ball.reverseVY();
+            }
+
+            if(ball.getCx() < 0){
+                ball.reverseVX();
+            }
+            if(ball.getCy() > sx - 10){
+                ball.reverseVX();
+            }
+
             ball.update(fps);
+        }
+
+        public boolean isCollision(RectF brick){
+            float circleX = ball.getCx();
+            float circleY = ball.getCy();
+            float circleR = ball.getR();
+
+            float cX = (circleX < brick.left ? brick.left : (circleX > brick.right ? brick.right : circleX));
+            float cY = (circleY < brick.top ? brick.top : (circleY > brick.bottom ? brick.bottom : circleY));
+            float dx = cX - circleX;
+            float dy = cY - circleY;
+
+            return (dx * dx + dy * dy) <= circleR * circleR;
         }
 
         public void draw(){

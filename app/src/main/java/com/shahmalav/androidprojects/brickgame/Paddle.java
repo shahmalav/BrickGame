@@ -25,7 +25,7 @@ public class Paddle {
 
         height = 20;
         width = 120;
-        speed = 200;
+        speed = 400;
         direction = 'C';
         this.sx = sx;
         paddle = new RectF(x, y, x+width, y+height);
